@@ -1,62 +1,21 @@
-'''
-class CustomNumbers:
-    def __init__(self):
-        self._numbers = [n for n in range(1, 11)]
+from sklearn.manifold import TSNE
+from sklearn.datasets import load_digits
 
+# MNIST 데이터 불러오기
+data = load_digits()
 
-a = CustomNumbers()
+# 2차원으로 차원 축소
+n_components = 2
 
+# t-sne 모델 생성
+model = TSNE(n_components=n_components)
 
-print(a._numbers[2:5])
-
-
-'''
-
-#img
-class myClass:
-    def __init__(self):
-
-        self.numbers = [1,2,3,4,6,7]
-
-    def __getitem__(self, idx):
-        return self.numbers
-
-#csv
-class myCSV:
-    def __init__(self):
-        pass
-
-    def __getitem__(self, item):
-        return 0
-
-
-
-a  = myClass()
-b  = myCSV()
-
-
-print(a.numbers[1])
-
-
-for i in zip(a, b):
-    print(i)
-
-
-'''
-for idx, i in enumerate(a):
-    print(a[idx].numbers)
-
-'''
-
-
-
-
-
-'''
-a = [1,2,3]
-
-#a가 iterable 객체이어야 함
-for i in a:
-    print(i)
-
-'''
+# 학습한 결과 2차원 공간 값 출력
+print(model.fit_transform(data.data))
+# [
+#     [67.38322, -1.9517338],
+#     [-11.936052, -8.906425],
+#     ...
+#     [-10.278599, 8.832907],
+#     [25.714725, 11.745557],
+# ]
