@@ -4,21 +4,21 @@ from sklearn.manifold import TSNE#T-SNE 사용
 from sklearn.datasets import load_digits#dataSet중 하나
 import pandas as pd#데이터 처리용
 from sklearn.cluster import KMeans#클러스터링 관련 모시깽이
-from sklearn import preprocessing#데이터 전처리용
+from sklearn import preprocessing #데이터 전처리용
 
 # MNIST 데이터 불러오기
-data = load_digits()
-img_color = plt.imread('./test.jpg')
+#data = load_digits()
+#img_color = plt.imread('./test.jpg')
 
 # 2차원으로 차원 축소
-n_components = 2
+#n_components = 2
 
-x = np.loadtxt("./sequence_int.txt", dtype='float', delimiter=',', skiprows = 1)
+#x = np.loadtxt("./sequence_int.txt", dtype='float', delimiter=',', skiprows = 1)
 #print(x[0][0]). x는 2차원 배열
 #print("y.shape:{}".format(x))
 
 # t-sne 모델 생성
-model = TSNE(n_components=n_components)#2차원으로 차원축소하는 model
+#model = TSNE(n_components=n_components)#2차원으로 차원축소하는 model
 #print(model.fit_transform(x))
 
 #y = model.fit_transform(x)
@@ -39,9 +39,9 @@ student_data=pd.read_excel('./ex2.xls')
 students = student_data.groupby('Name').mean()
 
 # normalizer 생성
-#min_max_scaler = preprocessing.MinMaxScaler()
+min_max_scaler = preprocessing.MinMaxScaler()
 # 표준화하기
-#students[['Mark', 'Attended']] = min_max_scaler.fit_transform(students[['Mark', 'Attended']])
+students[['Mark', 'Attended']] = min_max_scaler.fit_transform(students[['Mark', 'Attended']])
 
 # k=3 클러스터 생성
 estimator = KMeans(n_clusters=3)
