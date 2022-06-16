@@ -3,6 +3,8 @@ import numpy as np#이건 모르겠다
 from sklearn.manifold import TSNE#T-SNE 사용
 from sklearn.datasets import load_digits#dataSet중 하나
 import pandas as pd#데이터 처리용
+from sklearn.cluster import KMeans#클러스터링 관련 모시깽이
+from sklearn import preprocessing#데이터 전처리용
 
 # MNIST 데이터 불러오기
 data = load_digits()
@@ -19,8 +21,8 @@ x = np.loadtxt("./sequence_int.txt", dtype='float', delimiter=',', skiprows = 1)
 model = TSNE(n_components=n_components)#2차원으로 차원축소하는 model
 #print(model.fit_transform(x))
 
-y = model.fit_transform(x)
-print(y)
+#y = model.fit_transform(x)
+#print(y)
 ## 학습한 결과 2차원 공간 값 출력
 #print(model.fit_transform(data.data))
 # [
@@ -33,7 +35,26 @@ print(y)
 #plt.scatter(y[:,0], y[:,1], alpha=0.9, c=y[:,0], s=3, cmap='viridis')
 #plt.show()
 
-#student_data=pd.read_excel('./ex1.xls')
+student_data=pd.read_excel('./ex2.xls')
+students = student_data.groupby('Name').mean()
+
+# normalizer 생성
+#min_max_scaler = preprocessing.MinMaxScaler()
+# 표준화하기
+#students[['Mark', 'Attended']] = min_max_scaler.fit_transform(students[['Mark', 'Attended']])
+
+# k=3 클러스터 생성
+estimator = KMeans(n_clusters=3)
+cluster_ids = estimator.fit_predict(students)
+# 플롯
+plt.scatter(students['Attended'], students['Mark'], c=cluster_ids)
+plt.xlabel("Attended classes")
+plt.ylabel("Mark")
+# 범례 달기
+for name, mark, attended in students.itertuples():
+    plt.annotate(name, (attended, mark))
+
+plt.show()
 
 # load library
 #from matplotlib import font_manager
